@@ -21,9 +21,6 @@ class FilterStudio(qtw.QWidget):
         self.filtered_dft = Viewer()
         self.filtered_dft_layout.addWidget(self.filtered_dft)
         self.kernal_viewer = Viewer()
-
-
-
         self.Image_mode = "gray"
         self.filters_list.activated.connect(self.image_transformation)
         self.modes_list.activated.connect(self.image_transformation)
@@ -44,7 +41,7 @@ class FilterStudio(qtw.QWidget):
         self.original_img = cv2.cvtColor(BGR_img, cv2.COLOR_BGR2RGB)
         self.HSV_img = cv2.cvtColor(BGR_img, cv2.COLOR_BGR2HSV)
 
-        self.init_dft_gray(self.original_img)
+        self.init_dft_gray(BGR_img)
         self.init_dft_RGB(self.original_img)
         self.image_transformation()
         self.image_size=BGR_img.shape[:-1]
@@ -54,6 +51,7 @@ class FilterStudio(qtw.QWidget):
         self.dft_gray = fftshift(dft_img)
 
     def init_dft_RGB(self, rgb_img):
+        # using HSV 
         HSV_img = cv2.cvtColor(rgb_img, cv2.COLOR_RGB2HSV)
         intensity = HSV_img[:, :, 2]
         dft_img = fft2(intensity)
