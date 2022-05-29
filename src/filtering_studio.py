@@ -40,7 +40,6 @@ class FilterStudio(qtw.QWidget):
         BGR_img = cv2.imread(image_path)
         self.original_img = cv2.cvtColor(BGR_img, cv2.COLOR_BGR2RGB)
         self.HSV_img = cv2.cvtColor(BGR_img, cv2.COLOR_BGR2HSV)
-
         self.init_dft_gray(BGR_img)
         self.init_dft_RGB(self.original_img)
         self.image_transformation()
@@ -74,9 +73,8 @@ class FilterStudio(qtw.QWidget):
 
     def apply_low_pass_filter(self, MODE):
 
+        radius = self.kernal_spinbox.value()  # --------ratio from image
         if MODE == 'GRAY':
-
-            radius = self.kernal_spinbox.value()  # --------ratio from image
             mask = np.zeros(self.dft_gray.shape)
 
 
@@ -98,7 +96,6 @@ class FilterStudio(qtw.QWidget):
 
 
         else:
-            radius = self.kernal_spinbox.value()  # --------ratio from image
             mask = np.zeros(self.dft_RGB.shape)
 
             cy = mask.shape[0] // 2
@@ -112,23 +109,23 @@ class FilterStudio(qtw.QWidget):
             dft_spectrum=20 * np.log(np.abs(self.dft_RGB))
 
             img_filtered = np.abs(np.fft.ifft2(inv_shifit_dft, axes=(0, 1))).clip(0, 255).astype(np.uint8)
-            img_filtered = np.dstack((self.HSV_img[:, :, 0], self.HSV_img[:, :, 1], img_filtered))
-            img_filtered = cv2.cvtColor(img_filtered, cv2.COLOR_HSV2RGB)
+            self.HSV_img[:, :, 2]=img_filtered
+            img_filtered = cv2.cvtColor(self.HSV_img, cv2.COLOR_HSV2RGB)
 
             self.draw(dft_spectrum, filterd_dft, self.original_img, img_filtered)
 
 
     def apply_high_pass_filter(self, MODE):
-        if MODE == 'GRAY':
 
-            radius = self.kernal_spinbox.value()  # --------ratio from image
+        radius = self.kernal_spinbox.value()  # --------ratio from image
+        if MODE == 'GRAY':
             mask = np.ones(self.dft_gray.shape)
             print('applay lowpass:', mask)
 
             cy = mask.shape[0] // 2
             cx = mask.shape[1] // 2
 
-            cv2.circle(mask, (cx, cy), radius, (0, 0, 0), -1)[0]  # remove [0]
+            cv2.circle(mask, (cx, cy), radius, (0, 0, 0), -1)[0]  # remove [1]
 
             filterd_dft = np.multiply(self.dft_gray, mask)
             inv_shifit_dft = np.fft.ifftshift(filterd_dft)
@@ -145,7 +142,6 @@ class FilterStudio(qtw.QWidget):
 
 
         else:
-            radius = self.kernal_spinbox.value()  # --------ratio from image
             mask = np.ones(self.dft_RGB.shape)
 
             cy = mask.shape[0] // 2
@@ -159,9 +155,9 @@ class FilterStudio(qtw.QWidget):
             dft_spectrum=20 * np.log(np.abs(self.dft_RGB))
 
             img_filtered = np.abs(np.fft.ifft2(inv_shifit_dft, axes=(0, 1))).clip(0, 255).astype(np.uint8)
-            img_filtered = np.dstack((self.HSV_img[:, :, 0], self.HSV_img[:, :, 1], img_filtered))
+            self.HSV_img[:, :, 2]=img_filtered
 
-            img_filtered = cv2.cvtColor(img_filtered, cv2.COLOR_HSV2RGB)
+            img_filtered = cv2.cvtColor(self.HSV_img, cv2.COLOR_HSV2RGB)
             print('applay highpass RGB:')
             self.draw(dft_spectrum, filterd_dft, self.original_img, img_filtered)
 
