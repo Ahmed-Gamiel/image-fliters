@@ -196,8 +196,6 @@ class FilterStudio(qtw.QWidget):
             medianfilter_image = cv2.cvtColor(medianfilter_image, cv2.COLOR_HSV2RGB)
             self.draw(magnitude_spectrum, magnitude_spectrum_filter, self.original_img, medianfilter_image)
 
-
-
     def apply_laplacian_filter(self, MODE):
         gray_img= cv2.cvtColor(self.original_img, cv2.COLOR_BGR2GRAY)
         kernal =self.kernal_spinbox.value()
@@ -211,8 +209,6 @@ class FilterStudio(qtw.QWidget):
         filterd_dft = np.fft.fftshift(filterd_dft)
         laplacian_spectrum_filtered = 20 * np.log(np.abs(filterd_dft) + 1)
         self.draw(laplacian_spectrum,laplacian_spectrum_filtered,self.original_img,filtered_img)
-
-
 
 
     def draw(self,spectrum,filtered_spectrum,original_image,filtered_image):

@@ -67,6 +67,7 @@ class Equalizer(qtw.QWidget):
             image_1D, (self.img.shape[0], self.img.shape[1]))
 
         self.view_equalized_image()
+        self.view_equalized_histogram()
 
     def view_original_image(self):
         self.image_viewer.draw_image(self.img)
@@ -76,4 +77,5 @@ class Equalizer(qtw.QWidget):
 
     def view_histogram(self):
         self.histogram_viewer.draw_histogram(self.img)
+    def view_equalized_histogram(self):
         self.equalized_histogram.draw_histogram(self.equalized_image)
