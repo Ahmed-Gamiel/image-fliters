@@ -29,7 +29,7 @@
 ![Sampler](docs/laplacian.gif)
 
 ## Equalization_Demo
-![Sampler](docs/equalization.gif)
+![Sampler](docs/equalizer.gif)
 
 
 
