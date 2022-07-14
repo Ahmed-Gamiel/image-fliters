@@ -204,7 +204,7 @@
            </size>
           </property>
           <property name="text">
-           <string>Kernal Size:</string>
+           <string>Mask Size:</string>
           </property>
          </widget>
         </item>
