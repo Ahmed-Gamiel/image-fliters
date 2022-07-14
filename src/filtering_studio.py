@@ -59,8 +59,6 @@ class FilterStudio(qtw.QWidget):
     def image_transformation(self):
         MODE = str(self.modes_list.currentText())
         FILTER = str(self.filters_list.currentText())
-        print((MODE))
-        print(FILTER)
 
         if FILTER == "Low_Pass_Filter":
             self.apply_low_pass_filter(MODE)
@@ -178,10 +176,7 @@ class FilterStudio(qtw.QWidget):
             filterd_dft = np.fft.fftshift(filterd_dft)
             magnitude_spectrum_filter = 20 * np.log(np.abs(filterd_dft))
             self.draw(magnitude_spectrum, magnitude_spectrum_filter, self.original_img, medianfilter_image)
-
-            # self.dft_image.draw_image(magnitude_spectrum)
-            # self.filtered_image.draw_image(medianfilter_image)
-            # self.filtered_dft.draw_image(magnitude_spectrum_filter)
+            
         else:
             HSV_img = cv2.cvtColor(self.original_img, cv2.COLOR_RGB2HSV)
             dft_img = np.fft.fft2(HSV_img[:,:,-1])

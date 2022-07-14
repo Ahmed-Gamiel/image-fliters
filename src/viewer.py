@@ -39,6 +39,6 @@ class Viewer(FigureCanvas):
         self.draw()
 
     def draw_histogram(self, img):
-        print("*******************")
+
         self.axes.hist(img, bins=5)
         self.draw()

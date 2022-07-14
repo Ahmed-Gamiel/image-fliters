@@ -16,7 +16,7 @@ class MainWindow(qtw.QMainWindow):
         self.page = Page()
         self.centralWidget().layout().addWidget(self.page)
         self.browse_action.triggered.connect(self.Load_image_file)
-
+        # print(self.page.tabBarClicked(0))
 
     @pyqtSlot()
     def Load_image_file(self):
